@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant - Контакты</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="top">
+    <header>
+        <h1>Добро пожаловать в Restaurant</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О нас</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <a href="#top" class="progress-trigger"></a>
+        <section>
+            <h2>Контакты</h2>
+            <p>Адрес: ул. Гастрономическая, д. 22</p>
+            <p>Телефон: <a href="tel:+71234567890">+7 (123) 456-78-90</a></p>
+            <p>Email: <a href="mailto:info@restaurant.ru">info@restaurant.ru</a></p>
+
+            <h3>Часы работы</h3>
+            <table>
+                <tr>
+                    <th>День недели</th>
+                    <th>Время работы</th>
+                </tr>
+                <tr>
+                    <td>Понедельник-Пятница</td>
+                    <td>11:00 - 23:00</td>
+                </tr>
+                <tr>
+                    <td>Суббота-Воскресенье</td>
+                    <td>12:00 - 00:00</td>
+                </tr>
+            </table>
+
+            <h3>Как нас найти</h3>
+            <p>Мы расположены в центре города, рядом с театральной площадью. Ближайшая станция метро - "Культурная".</p>
+            
+            <h3>Карта проезда</h3>
+            <div class="map-container">
+                <iframe src="https://yandex.ru/map-widget/v1/?ll=37.6173%2C55.7558&z=17&l=map&size=600%2C400&module=fullscreen_2&page=fullscreentool&origin=constructor" 
+                        frameborder="0" 
+                        allowfullscreen="true">
+                </iframe>
+            </div>
+        </section>
+
+        <section>
+            <h2>Обратная связь</h2>
+            <form action="#" method="post" class="feedback-form">
+                <div class="form-group">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" name="name" required placeholder="Введите ваше имя">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required placeholder="example@mail.ru">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Сообщение:</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Напишите ваше сообщение..."></textarea>
+                </div>
+
+                <button type="submit">Отправить</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Restaurant. Уютный ресторан в центре города. Все права защищены.</p>
+    </footer>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+</body>
+</html>
