@@ -207,6 +207,86 @@ img {
     border-color: #ffd700;
 }
 
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sort-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-wrapper label {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.sort-select {
+    padding: 0.7rem 1.2rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 25px;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    outline: none;
+}
+
+.sort-select:hover {
+    background-color: rgba(255, 215, 0, 0.3);
+}
+
+.sort-select:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+}
+
+.sort-select option {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.filter-btn {
+    padding: 0.7rem 1.5rem;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 25px;
+    background-color: rgba(255, 215, 0, 0.1);
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+.filter-btn:hover {
+    background-color: rgba(255, 215, 0, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+}
+
+.filter-btn.active {
+    background-color: #ffd700;
+    color: #000000;
+    border-color: #ffd700;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
 .menu-item h3 {
     color: #ffd700;
     margin-bottom: 0.5rem;
@@ -216,6 +296,13 @@ img {
 .menu-item p {
     color: #cccccc;
     font-size: 1.1rem;
+}
+
+.menu-item .price {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
 }
 
 .gallery-grid {
@@ -239,7 +326,6 @@ img {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
 
-/* Секция "О нас" */
 .about-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -335,7 +421,6 @@ tr:last-child td {
     border-bottom: none;
 }
 
-/* Форма обратной связи */
 .feedback-form {
     max-width: 550px;
     margin: 0 auto;

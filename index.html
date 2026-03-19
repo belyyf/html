@@ -34,38 +34,25 @@
 
         <section>
             <h2>Наше меню</h2>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <h3>Стейк Рибай</h3>
-                    <p>Сочный стейк из говядины Рибай, приготовленный на гриле. 850 руб.</p>
-                    <img src="images/food/steak.jpg" alt="Стейк Рибай" width="200" height="150">
+            
+            <div class="filter-container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="main">Главные блюда</button>
+                    <button class="filter-btn" data-filter="snack">Закуски</button>
                 </div>
-                <div class="menu-item">
-                    <h3>Паста Карбонара</h3>
-                    <p>Классическая итальянская паста с беконом и соусом карбонара. 450 руб.</p>
-                    <img src="images/food/pasta.jpg" alt="Паста Карбонара" width="200" height="150">
-                </div>
-                <div class="menu-item">
-                    <h3>Цезарь с курицей</h3>
-                    <p>Свежий салат Цезарь с куриной грудкой, сыром пармезан и хрустящими гренками. 380 руб.</p>
-                    <img src="images/food/salad.jpg" alt="Цезарь с курицей" width="200" height="150">
-                </div>
-                <div class="menu-item">
-                    <h3>Суп Минестроне</h3>
-                    <p>Традиционный итальянский овощной суп с пастой и специями. 280 руб.</p>
-                    <img src="images/food/soup.jpg" alt="Суп Минестроне" width="200" height="150">
-                </div>
-                <div class="menu-item">
-                    <h3>Фирменный бургер</h3>
-                    <p>Сочный говяжий бургер с беконом, сыром чеддер и фирменным соусом. 520 руб.</p>
-                    <img src="images/food/burger.jpg" alt="Фирменный бургер" width="200" height="150">
-                </div>
-                <div class="menu-item">
-                    <h3>Морской микс</h3>
-                    <p>Свежие морепродукты в сливочном соусе с гарниром на выбор. 750 руб.</p>
-                    <img src="images/food/seafood.jpg" alt="Морской микс" width="200" height="150">
+                
+                <div class="sort-wrapper">
+                    <label for="sort-select">Сортировка:</label>
+                    <select id="sort-select" class="sort-select">
+                        <option value="default">По умолчанию</option>
+                        <option value="cheap">По цене: от дешёвых к дорогим</option>
+                        <option value="expensive">По цене: от дорогих к дешёвым</option>
+                    </select>
                 </div>
             </div>
+            
+            <div class="menu-grid" id="products-container"></div>
         </section>
 
         <section>
@@ -92,5 +79,117 @@
     <div class="scroll-progress">
         <div class="scroll-progress-bar"></div>
     </div>
+    
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Стейк Рибай",
+                price: 850,
+                image: "images/food/steak.jpg",
+                article: "STK-001",
+                category: "main"
+            },
+            {
+                id: 2,
+                name: "Паста Карбонара",
+                price: 450,
+                image: "images/food/pasta.jpg",
+                article: "PST-002",
+                category: "main"
+            },
+            {
+                id: 3,
+                name: "Цезарь с курицей",
+                price: 380,
+                image: "images/food/salad.jpg",
+                article: "SLD-003",
+                category: "snack"
+            },
+            {
+                id: 4,
+                name: "Суп Минестроне",
+                price: 280,
+                image: "images/food/soup.jpg",
+                article: "SUP-004",
+                category: "main"
+            },
+            {
+                id: 5,
+                name: "Фирменный бургер",
+                price: 520,
+                image: "images/food/burger.jpg",
+                article: "BRG-005",
+                category: "main"
+            },
+            {
+                id: 6,
+                name: "Морской микс",
+                price: 750,
+                image: "images/food/seafood.jpg",
+                article: "SEA-006",
+                category: "snack"
+            }
+        ];
+
+        const container = document.getElementById('products-container');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const sortSelect = document.getElementById('sort-select');
+        
+        let currentFilter = 'all';
+        let currentSort = 'default';
+
+        function renderProducts(items) {
+            container.innerHTML = '';
+            
+            items.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'menu-item';
+                
+                card.innerHTML = `
+                    <h3>${product.name}</h3>
+                    <p>Артикул: ${product.article}</p>
+                    <p class="price">${product.price} руб.</p>
+                    <img src="${product.image}" alt="${product.name}" width="200" height="150">
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function applyFiltersAndSort() {
+            let filtered = [...products];
+
+            if (currentFilter === 'main') {
+                filtered = products.filter(p => p.category === 'main');
+            } else if (currentFilter === 'snack') {
+                filtered = products.filter(p => p.category === 'snack');
+            }
+
+            if (currentSort === 'cheap') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (currentSort === 'expensive') {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+            
+            renderProducts(filtered);
+        }
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                applyFiltersAndSort();
+            });
+        });
+
+        sortSelect.addEventListener('change', () => {
+            currentSort = sortSelect.value;
+            applyFiltersAndSort();
+        });
+
+        renderProducts(products);
+    </script>
 </body>
 </html>
