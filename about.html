@@ -14,6 +14,12 @@
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">О нас</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
+                <li>
+                    <button class="favorites-btn" id="favorites-btn" title="Избранное">
+                        <span class="heart-icon">♡</span>
+                        <span class="favorites-count" id="favorites-count">0</span>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -54,8 +60,27 @@
         <p>&copy; 2026 Restaurant. Уютный ресторан в центре города. Все права защищены.</p>
     </footer>
 
+    <div class="modal-overlay" id="favorites-modal">
+        <div class="modal-window favorites-window">
+            <button class="modal-close" id="favorites-modal-close">&times;</button>
+            <div class="favorites-content">
+                <h2>Избранное</h2>
+                <div class="favorites-items" id="favorites-items"></div>
+                <div class="favorites-total">
+                    <span>Итого:</span>
+                    <span class="total-sum" id="total-sum">0 руб.</span>
+                </div>
+                <div class="favorites-actions">
+                    <button class="clear-favorites" id="clear-favorites">Очистить всё</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="scroll-progress">
         <div class="scroll-progress-bar"></div>
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

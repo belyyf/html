@@ -14,6 +14,12 @@
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="about.html">О нас</a></li>
                 <li><a href="contacts.html">Контакты</a></li>
+                <li>
+                    <button class="favorites-btn" id="favorites-btn" title="Избранное">
+                        <span class="heart-icon">♡</span>
+                        <span class="favorites-count" id="favorites-count">0</span>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -89,6 +95,23 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="favorites-modal">
+        <div class="modal-window favorites-window">
+            <button class="modal-close" id="favorites-modal-close">&times;</button>
+            <div class="favorites-content">
+                <h2>Избранное</h2>
+                <div class="favorites-items" id="favorites-items"></div>
+                <div class="favorites-total">
+                    <span>Итого:</span>
+                    <span class="total-sum" id="total-sum">0 руб.</span>
+                </div>
+                <div class="favorites-actions">
+                    <button class="clear-favorites" id="clear-favorites">Очистить всё</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Restaurant. Уютный ресторан в центре города. Все права защищены.</p>
     </footer>
@@ -96,171 +119,7 @@
     <div class="scroll-progress">
         <div class="scroll-progress-bar"></div>
     </div>
-    
-    <script>
-        const products = [
-            {
-                id: 1,
-                name: "Стейк Рибай",
-                price: 850,
-                image: "images/food/steak.jpg",
-                category: "main",
-                description: "Сочный стейк из мраморной говядины зернового откорма. Готовится на гриле до идеальной степени прожарки. Подаётся с фирменным соусом. Вес порции: 350 г."
-            },
-            {
-                id: 2,
-                name: "Паста Карбонара",
-                price: 450,
-                image: "images/food/pasta.jpg",
-                category: "main",
-                description: "Классическая итальянская паста с гуанчиале, яичным желтком, сыром пекорино романо и чёрным перцем. Готовится без сливок, по традиционному римскому рецепту. Вес порции: 300 г."
-            },
-            {
-                id: 3,
-                name: "Цезарь с курицей",
-                price: 380,
-                image: "images/food/salad.jpg",
-                category: "snack",
-                description: "Свежий салат романо с нежным куриным филе гриль, хрустящими сухариками из белого хлеба, пармезаном и фирменным соусом Цезарь. Вес порции: 250 г."
-            },
-            {
-                id: 4,
-                name: "Суп Минестроне",
-                price: 280,
-                image: "images/food/soup.jpg",
-                category: "main",
-                description: "Традиционный итальянский овощной суп с сезонными овощами, белой фасолью и пастой. Подаётся с базиликом и пармезаном. Лёгкий и полезный. Вес порции: 350 мл."
-            },
-            {
-                id: 5,
-                name: "Фирменный бургер",
-                price: 520,
-                image: "images/food/burger.jpg",
-                article: "BRG-005",
-                category: "main",
-                description: "Сочная котлета из мраморной говядины с сыром чеддер, свежими томатами, маринованными огурцами, красным луком и фирменным соусом на булочке бриошь. Вес порции: 400 г."
-            },
-            {
-                id: 6,
-                name: "Морской микс",
-                price: 750,
-                image: "images/food/seafood.jpg",
-                article: "SEA-006",
-                category: "snack",
-                description: "Ассорти из морепродуктов: тигровые креветки, кальмары, мидии и осьминоги, обжаренные на гриле с чесноком и оливковым маслом. Подаётся с лимоном и соусом тартар. Вес порции: 300 г."
-            }
-        ];
 
-        const container = document.getElementById('products-container');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const sortSelect = document.getElementById('sort-select');
-        const modal = document.getElementById('product-modal');
-        const modalClose = document.getElementById('modal-close');
-        const modalImg = document.getElementById('modal-img');
-        const modalName = document.getElementById('modal-name');
-        const modalArticle = document.getElementById('modal-article');
-        const modalPrice = document.getElementById('modal-price');
-        const modalDescription = document.getElementById('modal-description');
-
-        let currentFilter = 'all';
-        let currentSort = 'default';
-
-        function openModal(product) {
-            modalImg.src = product.image;
-            modalImg.alt = product.name;
-            modalName.textContent = product.name;
-            modalArticle.textContent = product.article;
-            modalPrice.textContent = `${product.price} руб.`;
-            modalDescription.textContent = product.description;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        modalClose.addEventListener('click', closeModal);
-
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-
-        function renderProducts(items) {
-            container.innerHTML = '';
-
-            items.forEach(product => {
-                const card = document.createElement('div');
-                card.className = 'menu-item';
-
-                card.innerHTML = `
-                    <h3 class="product-name" data-id="${product.id}">${product.name}</h3>
-                    <p class="price">${product.price} руб.</p>
-                    <img src="${product.image}" alt="${product.name}" width="200" height="150" class="product-image" data-id="${product.id}">
-                `;
-
-                container.appendChild(card);
-            });
-
-            document.querySelectorAll('.product-name').forEach(el => {
-                el.addEventListener('click', () => {
-                    const id = parseInt(el.dataset.id);
-                    const product = products.find(p => p.id === id);
-                    if (product) openModal(product);
-                });
-            });
-
-            document.querySelectorAll('.product-image').forEach(el => {
-                el.addEventListener('click', () => {
-                    const id = parseInt(el.dataset.id);
-                    const product = products.find(p => p.id === id);
-                    if (product) openModal(product);
-                });
-            });
-        }
-
-        function applyFiltersAndSort() {
-            let filtered = [...products];
-
-            if (currentFilter === 'main') {
-                filtered = products.filter(p => p.category === 'main');
-            } else if (currentFilter === 'snack') {
-                filtered = products.filter(p => p.category === 'snack');
-            }
-
-            if (currentSort === 'cheap') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (currentSort === 'expensive') {
-                filtered.sort((a, b) => b.price - a.price);
-            }
-            
-            renderProducts(filtered);
-        }
-
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                applyFiltersAndSort();
-            });
-        });
-
-        sortSelect.addEventListener('change', () => {
-            currentSort = sortSelect.value;
-            applyFiltersAndSort();
-        });
-
-        renderProducts(products);
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
