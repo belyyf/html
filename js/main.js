@@ -133,15 +133,41 @@ function renderFavoritesModal() {
                 </div>
             </div>
             <div class="favorites-item-controls">
-                <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">−</button>
+                <button class="quantity-btn decrease-btn" data-id="${item.id}">−</button>
                 <span class="quantity-value">${item.quantity}</span>
-                <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
-                <button class="remove-btn" onclick="removeFromFavorites(${item.id})" title="Удалить">✕</button>
+                <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
+                <button class="remove-btn" data-id="${item.id}" title="Удалить">✕</button>
             </div>
             <div class="favorites-item-total">${itemTotal} руб.</div>
         `;
 
         container.appendChild(itemEl);
+    });
+
+    container.querySelectorAll('.decrease-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            decreaseQuantity(id);
+            renderFavoritesModal();
+            renderProducts(getFilteredAndSortedProducts());
+        });
+    });
+
+    container.querySelectorAll('.increase-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            increaseQuantity(id);
+            renderFavoritesModal();
+        });
+    });
+
+    container.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            removeFromFavorites(id);
+            renderFavoritesModal();
+            renderProducts(getFilteredAndSortedProducts());
+        });
     });
 
     totalSumEl.textContent = `${total} руб.`;
