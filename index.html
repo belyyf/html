@@ -120,7 +120,6 @@
                 name: "Цезарь с курицей",
                 price: 380,
                 image: "images/food/salad.jpg",
-                article: "SLD-003",
                 category: "snack",
                 description: "Свежий салат романо с нежным куриным филе гриль, хрустящими сухариками из белого хлеба, пармезаном и фирменным соусом Цезарь. Вес порции: 250 г."
             },
@@ -129,7 +128,6 @@
                 name: "Суп Минестроне",
                 price: 280,
                 image: "images/food/soup.jpg",
-                article: "SUP-004",
                 category: "main",
                 description: "Традиционный итальянский овощной суп с сезонными овощами, белой фасолью и пастой. Подаётся с базиликом и пармезаном. Лёгкий и полезный. Вес порции: 350 мл."
             },
@@ -206,7 +204,6 @@
 
                 card.innerHTML = `
                     <h3 class="product-name" data-id="${product.id}">${product.name}</h3>
-                    <p>Артикул: ${product.article}</p>
                     <p class="price">${product.price} руб.</p>
                     <img src="${product.image}" alt="${product.name}" width="200" height="150" class="product-image" data-id="${product.id}">
                 `;
