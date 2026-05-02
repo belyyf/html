@@ -76,6 +76,12 @@
                 <p>Для наших гостей мы предлагаем широкий выбор вегетарианских и веганских блюд, приготовленных из свежих сезонных овощей и специальных заменителей мяса.</p>
             </div>
         </section>
+
+        <section>
+            <h2>Бронирование столика</h2>
+            <p>Нажмите кнопку, чтобы открыть план зала и выбрать свободный столик.</p>
+            <button class="details-btn" id="open-reservation-modal" type="button">Открыть план ресторана</button>
+        </section>
     </main>
 
     <div class="modal-overlay" id="product-modal">
@@ -112,6 +118,51 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="reservation-modal">
+        <div class="modal-window reservation-window">
+            <button class="modal-close" id="reservation-modal-close">&times;</button>
+            <div class="reservation-content">
+                <h2>Бронирование столиков</h2>
+                <div class="reservation-controls">
+                    <div class="form-group">
+                        <label for="booking-date">Дата:</label>
+                        <input type="date" id="booking-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-time">Время:</label>
+                        <input type="time" id="booking-time" required>
+                        <p class="time-limit-hint" id="booking-time-limit"></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-end-time">До:</label>
+                        <input type="time" id="booking-end-time" required>
+                    </div>
+                </div>
+
+                <div class="tables-legend">
+                    <span class="legend-item"><span class="legend-box free"></span> Свободно</span>
+                    <span class="legend-item"><span class="legend-box busy"></span> Занято</span>
+                    <span class="legend-item"><span class="legend-box selected"></span> Выбрано</span>
+                </div>
+
+                <div class="tables-grid" id="tables-grid"></div>
+
+                <form id="table-booking-form" class="feedback-form booking-form">
+                    <div class="form-group">
+                        <label for="booking-name">Имя:</label>
+                        <input type="text" id="booking-name" required placeholder="Введите имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-phone">Телефон:</label>
+                        <input type="tel" id="booking-phone" required placeholder="+7 (999) 123-45-67">
+                    </div>
+                    <button type="submit">Забронировать выбранные столики</button>
+                    <p class="form-status" id="booking-status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Minnesota. Уютный ресторан в центре города. Все права защищены.</p>
     </footer>
@@ -124,6 +175,7 @@
     <script src="js/favorites.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/table-booking.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

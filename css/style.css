@@ -591,6 +591,28 @@ tr:last-child td {
     transform: translateY(-1px);
 }
 
+.form-status {
+    min-height: 1.2rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.form-status.success {
+    color: #7CFC00;
+}
+
+.form-status.error {
+    color: #ff6464;
+}
+
+.time-limit-hint {
+    margin-top: 0.4rem;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: #bdbdbd;
+}
+
 input:focus,
 textarea:focus {
     outline: none;
@@ -782,6 +804,93 @@ footer a:hover {
 
 .favorites-window {
     max-width: 700px;
+}
+
+.reservation-window {
+    max-width: 1000px;
+}
+
+.reservation-content {
+    padding: 2rem;
+}
+
+.reservation-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.tables-legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 0.5rem 0 1rem;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.95rem;
+}
+
+.legend-box {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.legend-box.free {
+    background-color: #2ecc71;
+}
+
+.legend-box.busy {
+    background-color: #e74c3c;
+}
+
+.legend-box.selected {
+    background-color: #3498db;
+}
+
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.table-item {
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 0.5rem;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.table-item.free {
+    background-color: #2ecc71;
+}
+
+.table-item.busy {
+    background-color: #e74c3c;
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+.table-item.selected {
+    background-color: #3498db;
+    box-shadow: 0 0 0 2px #ffffff inset;
+}
+
+.table-item.free:hover {
+    transform: translateY(-2px);
+}
+
+.booking-form {
+    max-width: 100%;
 }
 
 .favorites-content h2 {
@@ -1003,6 +1112,10 @@ footer a:hover {
 
     .modal-info h2 {
         font-size: 1.5rem;
+    }
+
+    .tables-grid {
+        grid-template-columns: repeat(4, minmax(70px, 1fr));
     }
 }
 
