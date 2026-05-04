@@ -1,18 +1,35 @@
-const container = document.getElementById('products-container');
-const filterButtons = document.querySelectorAll('.filter-btn');
-const sortSelect = document.getElementById('sort-select');
-const modal = document.getElementById('product-modal');
-const modalClose = document.getElementById('modal-close');
-const modalImg = document.getElementById('modal-img');
-const modalName = document.getElementById('modal-name');
-const modalArticle = document.getElementById('modal-article');
-const modalPrice = document.getElementById('modal-price');
-const modalDescription = document.getElementById('modal-description');
+// Отладочная проверка DOM-элементов
+if (DEBUG_MODE) {
+    debugLog.info("Инициализация main.js");
+    debugLog.info("Режим отладки:", DEBUG_MODE ? "ВКЛ" : "ВЫКЛ");
+}
 
-const favoritesBtn = document.getElementById('favorites-btn');
-const favoritesModal = document.getElementById('favorites-modal');
-const favoritesModalClose = document.getElementById('favorites-modal-close');
-const clearFavoritesBtn = document.getElementById('clear-favorites');
+const container = document.getElementById("products-container");
+const filterButtons = document.querySelectorAll(".filter-btn");
+const sortSelect = document.getElementById("sort-select");
+const modal = document.getElementById("product-modal");
+const modalClose = document.getElementById("modal-close");
+const modalImg = document.getElementById("modal-img");
+const modalName = document.getElementById("modal-name");
+const modalArticle = document.getElementById("modal-article");
+const modalPrice = document.getElementById("modal-price");
+const modalDescription = document.getElementById("modal-description");
+
+const favoritesBtn = document.getElementById("favorites-btn");
+const favoritesModal = document.getElementById("favorites-modal");
+const favoritesModalClose = document.getElementById("favorites-modal-close");
+const clearFavoritesBtn = document.getElementById("clear-favorites");
+
+// Валидация в режиме отладки
+if (DEBUG_MODE) {
+    debugAssert.notNull(container, "Контейнер продуктов #products-container не найден");
+    debugAssert.notNull(modal, "Модальное окно #product-modal не найдено");
+    debugLog.info("DOM-элементы инициализированы", {
+        container: !!container,
+        modal: !!modal,
+        filterButtons: filterButtons.length
+    });
+}
 
 function openModal(product) {
     modalImg.src = product.image;
@@ -58,7 +75,12 @@ document.addEventListener('keydown', (e) => {
 });
 
 function renderProducts(items) {
-    container.innerHTML = '';
+    if (DEBUG_MODE) {
+        debugLog.time("renderProducts");
+        debugLog.info("Рендер продуктов, количество:", items.length);
+    }
+
+    container.innerHTML = "";
 
     items.forEach(product => {
         const card = document.createElement('div');
@@ -79,8 +101,13 @@ function renderProducts(items) {
         container.appendChild(card);
     });
 
-    document.querySelectorAll('.favorite-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    if (DEBUG_MODE) {
+        debugLog.timeEnd("renderProducts");
+    }
+
+    // Навешивание обработчиков событий
+    document.querySelectorAll(".favorite-btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
             e.stopPropagation();
             const id = parseInt(btn.dataset.id);
             toggleFavorite(id);

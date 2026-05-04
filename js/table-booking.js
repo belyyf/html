@@ -11,6 +11,13 @@ const bookingPhoneInput = document.getElementById("booking-phone");
 const bookingStatus = document.getElementById("booking-status");
 const bookingTimeLimit = document.getElementById("booking-time-limit");
 
+// Отладочная проверка
+if (DEBUG_MODE) {
+    debugLog.info("Инициализация table-booking.js");
+    debugAssert.notNull(openReservationModalBtn, "Кнопка открытия модального окна не найдена");
+    debugAssert.notNull(reservationModal, "Модальное окно бронирования не найдено");
+}
+
 const TOTAL_TABLES = 20;
 
 function isValidPhone(phone) {

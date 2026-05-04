@@ -1,16 +1,31 @@
 let favorites = [];
 
 function loadFavorites() {
+    if (DEBUG_MODE) {
+        debugLog.time("loadFavorites");
+        debugLog.info("Загрузка избранного из localStorage");
+    }
+
     try {
         const saved = localStorage.getItem("favorites");
         if (saved) {
             favorites = JSON.parse(saved);
+            if (DEBUG_MODE) {
+                debugLog.info("Загружено элементов:", favorites.length);
+            }
         }
     } catch (error) {
-        console.error("Ошибка загрузки избранного:", error.message);
+        if (DEBUG_MODE) {
+            debugLog.error("Ошибка загрузки избранного:", error.message);
+        }
         favorites = [];
     }
+
     updateFavoritesCount();
+
+    if (DEBUG_MODE) {
+        debugLog.timeEnd("loadFavorites");
+    }
 }
 
 function saveFavorites() {
