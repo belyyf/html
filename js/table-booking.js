@@ -12,6 +12,31 @@ const bookingStatus = document.getElementById("booking-status");
 const bookingTimeLimit = document.getElementById("booking-time-limit");
 
 const TOTAL_TABLES = 20;
+
+function isValidPhone(phone) {
+    return /^\+[1-9][0-9]{10}$/.test(phone);
+}
+
+function sanitizePhoneInput(value) {
+    let sanitized = value.replace(/[^0-9+]/g, "");
+
+    if (!sanitized.startsWith("+")) {
+        sanitized = "+" + sanitized;
+    }
+
+    sanitized = "+" + sanitized.slice(1).replace(/\+/g, "");
+
+    if (sanitized.length > 1 && sanitized[1] === "0") {
+        sanitized = "+" + sanitized.slice(2);
+    }
+
+    if (sanitized.length > 12) {
+        sanitized = sanitized.slice(0, 12);
+    }
+
+    return sanitized;
+}
+
 const YEAR_MIN_DATE = "2026-01-01";
 const YEAR_MAX_DATE = "2026-12-31";
 let selectedTables = new Set();
@@ -238,6 +263,34 @@ if (bookingEndTimeInput) {
     bookingEndTimeInput.addEventListener("change", loadTables);
 }
 
+if (bookingPhoneInput) {
+    console.log("bookingPhoneInput найден, добавляю валидацию");
+
+    bookingPhoneInput.addEventListener("input", function (event) {
+        const oldValue = this.value;
+        const sanitized = sanitizePhoneInput(oldValue);
+
+        if (oldValue !== sanitized) {
+            this.value = sanitized;
+        }
+    });
+
+    bookingPhoneInput.addEventListener("paste", function (event) {
+        event.preventDefault();
+        const pastedText = (event.clipboardData || window.clipboardData).getData("text");
+        const sanitized = sanitizePhoneInput(pastedText);
+
+        const currentValue = this.value;
+        const cursorPos = this.selectionStart;
+        const selectionEnd = this.selectionEnd;
+
+        const newValue = currentValue.slice(0, cursorPos) + sanitized + currentValue.slice(selectionEnd);
+        this.value = sanitizePhoneInput(newValue);
+    });
+} else {
+    console.error("bookingPhoneInput НЕ найден!");
+}
+
 if (bookingForm) {
     bookingForm.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -248,6 +301,11 @@ if (bookingForm) {
 
         if (!date || !startTime || !endTime || !name || !phone || selectedTables.size === 0) {
             setBookingStatus("Укажите дату, время (с/до), имя, телефон и выберите хотя бы один столик.", "error");
+            return;
+        }
+
+        if (!isValidPhone(phone)) {
+            setBookingStatus("Телефон должен быть в формате +71234567890 (11 цифр, начинается с +)", "error");
             return;
         }
 
