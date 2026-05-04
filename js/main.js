@@ -30,13 +30,26 @@ function closeModal() {
     document.body.style.overflow = '';
 }
 
-modalClose.addEventListener('click', closeModal);
+// Проверка наличия DOM-элементов перед использованием
+if (!container) {
+    console.error("Контейнер продуктов не найден");
+}
 
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        closeModal();
-    }
-});
+if (!modal) {
+    console.error("Модальное окно не найдено");
+}
+
+if (modalClose) {
+    modalClose.addEventListener("click", closeModal);
+}
+
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('active')) {
@@ -186,21 +199,27 @@ filterButtons.forEach(btn => {
     });
 });
 
-sortSelect.addEventListener('change', () => {
-    setSort(sortSelect.value);
-    applyFiltersAndSort();
-});
+if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+        setSort(sortSelect.value);
+        applyFiltersAndSort();
+    });
+}
 
-favoritesBtn.addEventListener('click', () => {
-    renderFavoritesModal();
-    favoritesModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-});
+if (favoritesBtn) {
+    favoritesBtn.addEventListener("click", () => {
+        renderFavoritesModal();
+        favoritesModal.classList.add("active");
+        document.body.style.overflow = "hidden";
+    });
+}
 
-favoritesModalClose.addEventListener('click', () => {
-    favoritesModal.classList.remove('active');
-    document.body.style.overflow = '';
-});
+if (favoritesModalClose) {
+    favoritesModalClose.addEventListener("click", () => {
+        favoritesModal.classList.remove("active");
+        document.body.style.overflow = "";
+    });
+}
 
 favoritesModal.addEventListener('click', (e) => {
     if (e.target === favoritesModal) {
@@ -209,12 +228,14 @@ favoritesModal.addEventListener('click', (e) => {
     }
 });
 
-clearFavoritesBtn.addEventListener('click', () => {
-    if (getFavorites().length > 0) {
-        clearAllFavorites();
-        renderProducts(getFilteredAndSortedProducts());
-        renderFavoritesModal();
-    }
-});
+if (clearFavoritesBtn) {
+    clearFavoritesBtn.addEventListener("click", () => {
+        if (getFavorites().length > 0) {
+            clearAllFavorites();
+            renderProducts(getFilteredAndSortedProducts());
+            renderFavoritesModal();
+        }
+    });
+}
 
 renderProducts(products);

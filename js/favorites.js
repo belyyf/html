@@ -1,9 +1,14 @@
 let favorites = [];
 
 function loadFavorites() {
-    const saved = localStorage.getItem('favorites');
-    if (saved) {
-        favorites = JSON.parse(saved);
+    try {
+        const saved = localStorage.getItem("favorites");
+        if (saved) {
+            favorites = JSON.parse(saved);
+        }
+    } catch (error) {
+        console.error("Ошибка загрузки избранного:", error.message);
+        favorites = [];
     }
     updateFavoritesCount();
 }

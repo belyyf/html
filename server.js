@@ -34,6 +34,7 @@ db.serialize(() => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// Middleware для отключения кеша JS и CSS файлов
 app.use((req, res, next) => {
     if (req.path.endsWith(".js") || req.path.endsWith(".css")) {
         res.set("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -42,12 +43,16 @@ app.use((req, res, next) => {
     }
     next();
 });
+
+// Раздача статических файлов (HTML, CSS, JS, изображения)
 app.use(express.static(__dirname));
 
+// Health check endpoint
 app.get("/api/health", (_req, res) => {
     res.json({ status: "ok" });
 });
 
+// Сохранение обратной связи от пользователя
 app.post("/api/feedback", (req, res) => {
     const { name, email, message } = req.body;
 

@@ -1,5 +1,5 @@
-let currentFilter = 'all';
-let currentSort = 'default';
+let currentFilter = "all";
+let currentSort = "default";
 
 function setFilter(filter) {
     currentFilter = filter;
@@ -7,14 +7,6 @@ function setFilter(filter) {
 
 function setSort(sort) {
     currentSort = sort;
-}
-
-function getCurrentFilter() {
-    return currentFilter;
-}
-
-function getCurrentSort() {
-    return currentSort;
 }
 
 function getFilteredAndSortedProducts() {

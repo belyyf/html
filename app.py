@@ -1,7 +1,8 @@
 import json
 import os
+import re
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -9,6 +10,7 @@ from urllib.parse import parse_qs, urlparse
 
 PORT = int(os.getenv("PORT", "3000"))
 TABLES_COUNT = 20
+PHONE_REGEX = re.compile(r"^\+[1-9][0-9]{10}$")
 YEAR_MIN_DATE = "2026-01-01"
 YEAR_MAX_DATE = "2026-12-31"
 BASE_DIR = Path(__file__).resolve().parent
@@ -132,7 +134,7 @@ class AppHandler(SimpleHTTPRequestHandler):
         cur = conn.cursor()
         cur.execute(
             "INSERT INTO feedback (name, email, message, created_at) VALUES (?, ?, ?, ?)",
-            (name, email, message, datetime.utcnow().isoformat(timespec="seconds") + "Z"),
+            (name, email, message, datetime.now(timezone.utc).isoformat(timespec="seconds") + "Z"),
         )
         conn.commit()
 
@@ -162,6 +164,10 @@ class AppHandler(SimpleHTTPRequestHandler):
 
         if not name or not phone or not date or not start_time or not end_time or table_number < 1 or table_number > TABLES_COUNT:
             self._send_json(400, {"error": "Required reservation fields are missing"})
+            return
+
+        if not PHONE_REGEX.match(phone):
+            self._send_json(400, {"error": "Invalid phone format. Expected: +71234567890"})
             return
 
         start_minutes = to_schedule_minutes(date, start_time)
@@ -205,7 +211,7 @@ class AppHandler(SimpleHTTPRequestHandler):
                 date,
                 start_time,
                 end_time,
-                datetime.utcnow().isoformat(timespec="seconds") + "Z",
+                datetime.now(timezone.utc).isoformat(timespec="seconds") + "Z",
             ),
         )
         conn.commit()

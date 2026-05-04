@@ -264,8 +264,6 @@ if (bookingEndTimeInput) {
 }
 
 if (bookingPhoneInput) {
-    console.log("bookingPhoneInput найден, добавляю валидацию");
-
     bookingPhoneInput.addEventListener("input", function (event) {
         const oldValue = this.value;
         const sanitized = sanitizePhoneInput(oldValue);
@@ -287,8 +285,6 @@ if (bookingPhoneInput) {
         const newValue = currentValue.slice(0, cursorPos) + sanitized + currentValue.slice(selectionEnd);
         this.value = sanitizePhoneInput(newValue);
     });
-} else {
-    console.error("bookingPhoneInput НЕ найден!");
 }
 
 if (bookingForm) {
