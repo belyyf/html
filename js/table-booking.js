@@ -363,3 +363,62 @@ if (bookingForm) {
         }
     });
 }
+
+function runBookingTests() {
+    console.log("\n=== МОДУЛЬНЫЕ ТЕСТЫ: Бронирование ===");
+    
+    console.log("\nТест 1: Валидация телефона");
+    const phoneTests = [
+        { input: "+71234567890", expected: true, desc: "Корректный номер" },
+        { input: "71234567890", expected: false, desc: "Без +" },
+        { input: "+0123456789", expected: false, desc: "Ноль после +" },
+        { input: "abc", expected: false, desc: "Буквы" },
+    ];
+    
+    let passed = 0;
+    phoneTests.forEach((test, i) => {
+        const result = isValidPhone(test.input);
+        const status = result === test.expected ? "✅ PASS" : "❌ FAIL";
+        if (result === test.expected) passed++;
+        console.log(`  ${i + 1}. ${status} - ${test.desc}`);
+    });
+    console.log(`  Результат: ${passed}/${phoneTests.length}`);
+    
+    console.log("\nТест 2: Санитизация телефона");
+    const sanitizeTests = [
+        { input: "abc", expected: "+", desc: "Буквы удаляются" },
+        { input: "+0123", expected: "+123", desc: "Ноль удаляется" },
+        { input: "7123", expected: "+7123", desc: "+ добавляется" },
+    ];
+    
+    passed = 0;
+    sanitizeTests.forEach((test, i) => {
+        const result = sanitizePhoneInput(test.input);
+        const status = result === test.expected ? "✅ PASS" : "❌ FAIL";
+        if (result === test.expected) passed++;
+        console.log(`  ${i + 1}. ${status} - ${test.desc}`);
+    });
+    console.log(`  Результат: ${passed}/${sanitizeTests.length}`);
+    
+    console.log("\nТест 3: Проверка времени");
+    const timeTests = [
+        { date: "2026-05-11", time: "18:00", expected: true, desc: "Пн-Пт 18:00 - валидно" },
+        { date: "2026-05-11", time: "10:00", expected: false, desc: "Пн-Пт 10:00 - рано" },
+        { date: "2026-05-16", time: "23:00", expected: true, desc: "Сб-Вс 23:00 - валидно" },
+    ];
+    
+    passed = 0;
+    timeTests.forEach((test, i) => {
+        const result = isBookingTimeAllowed(test.date, test.time);
+        const status = result === test.expected ? "✅ PASS" : "❌ FAIL";
+        if (result === test.expected) passed++;
+        console.log(`  ${i + 1}. ${status} - ${test.desc}`);
+    });
+    console.log(`  Результат: ${passed}/${timeTests.length}`);
+    console.log("====================================\n");
+}
+
+// Автоматический запуск тестов в режиме DEBUG
+if (typeof DEBUG_MODE !== "undefined" && DEBUG_MODE) {
+    runBookingTests();
+}
