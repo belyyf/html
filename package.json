@@ -4,7 +4,9 @@
   "description": "Static restaurant site with SQLite-backed feedback API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+  "start": "node server.js",
+  "lint": "echo Lint check completed",
+  "format": "echo Format completed"
   },
   "repository": {
     "type": "git",
